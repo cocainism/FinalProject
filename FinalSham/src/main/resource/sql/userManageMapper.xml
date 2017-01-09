@@ -29,7 +29,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="searchUser" resultType="finalWeb.command.UserCommand"
 		parameterType="Map">
 		select id,name,birth,cellphone,email, r
-		from (select id , name , birth,	cellphone, email, rownum r
+		from (select id , name , birth,
+		cellphone, email, rownum r
 		from (select * from shamUser order by name)
 		<where>
 			<if test="searchN == 0">
@@ -48,9 +49,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				email
 			</if>
 		</where>
-		like '%' || #{searchKeyword} || '%' order by name ) where r &gt;=#{startRow} and r &lt;= #{endRow}
+		like '%' || #{searchKeyword} || '%' order by name ) where r
+		&gt;=#{startRow} and r &lt;= #{endRow}
 
-	</select> 
+	</select>
 
 	<select id="searchUserCount" resultType="int" parameterType="map">
 		select count(*) from shamUser
@@ -71,18 +73,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				email
 			</if>
 		</where>
-			
-			like '%' || #{searchKeyword} || '%'
-		
+
+		like '%' || #{searchKeyword} || '%'
+
 	</select>
-	
-	<select id="userInfo" resultType="finalWeb.command.UserCommand" parameterType="String">
+
+	<select id="userInfo" resultType="finalWeb.command.UserCommand"
+		parameterType="String">
 		select * from shamUser where id=#{id}
-	
+
 	</select>
-	
+
 	<select id="visitCount" resultType="int" parameterType="String">
-		 select COUNT(*) from shamUser,performcategory where shamUser.ID=performcategory.ID and performcategory.ID=#{id}
-	
+		select COUNT(*) from shamUser,performcategory where
+		shamUser.ID=performcategory.ID and performcategory.ID=#{id}
+
 	</select>
+
+	<select id="getDesigner" resultType="finalWeb.command.DesignerCommand">
+		select * from designer
+
+	</select>
+
+	<insert id="visitAdd" parameterType="finalWeb.command.PerformCategoryCommand">
+		insert into performcategory(designer, performno, style, price, id)
+		values
+		(#{designer},PERFORMNOSEQ.NEXTVAL,#{style},#{price},#{id})
+
+	</insert>
+
+
 </mapper>

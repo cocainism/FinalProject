@@ -9,6 +9,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import finalWeb.command.DesignerCommand;
+import finalWeb.command.PerformCategoryCommand;
 import finalWeb.command.UserCommand;
 import finalWeb.service.ProcedureQAService;
 import finalWeb.service.UserManageService;
@@ -67,12 +69,42 @@ public class UserManageController {
 		List<UserCommand> userInfo = service.userInfo(id);
 		int visitCount = service.visitCount(id);
 		
-		System.out.println("Con-visitCount"+visitCount);
-
 		model.addAttribute("userInfo", userInfo);
 		model.addAttribute("visitCount", visitCount);
 
 		return "content/userInfoView";
 	}
+	
+	@RequestMapping(value = "/visitAddForm.do")
+	public String visitAddForm(String id, ModelMap model, DesignerCommand designerCommand) throws Exception {
+		
+		List<DesignerCommand> designerList = service.getDesigner();
+		model.addAttribute("id", id);
+		
+		for (int i = 0; i < designerList.size(); i++) {
+			
+			System.out.println(designerList.get(i).getDesigner());
+			
+		}
+		model.addAttribute("designerList", designerList);
+		
+		return "content/visitAdd";
+	}
+	
+	@RequestMapping(value = "/visitAdd.do")
+	public String visitAdd(String id, PerformCategoryCommand performCategoryCommand) throws Exception {
+		System.out.println("performCategoryCommand id추가전"+performCategoryCommand.getId());
+		System.out.println("performCategoryCommand deeee:"+performCategoryCommand.getDesigner());
+		System.out.println("performCategoryCommand sttttt:"+performCategoryCommand.getStyle());
+		performCategoryCommand.setId(id);
+		
+		System.out.println("performCategoryCommand id추가후"+performCategoryCommand.getId());
+		int i = service.visitAdd(performCategoryCommand);
+		
+		System.out.println(i);
+		return "content/visitAdd";
+	}
 
+	
+	
 }

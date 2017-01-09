@@ -8,6 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import finalWeb.command.DesignerCommand;
+import finalWeb.command.PerformCategoryCommand;
 import finalWeb.command.ProcedureQACommand;
 import finalWeb.command.UserCommand;
 
@@ -69,12 +71,22 @@ public class UserManageDao {
 	}
 
 	public int visitCount(String id) {
-		System.out.println("DAO====" + id);
- 
+
 		int i = session.selectOne("userManage.visitCount", id);
-		
-		System.out.println(i);
+
 		return i;
+	}
+
+	public List<DesignerCommand> getDesigner() {
+
+		List<DesignerCommand> getDesigner = session.selectList("userManage.getDesigner");
+
+		return getDesigner;
+	}
+
+	public int visitAdd(PerformCategoryCommand performCategoryCommand) {
+		System.out.println("performCategoryCommand sttttt:" + performCategoryCommand.getStyle());
+		return session.insert("userManage.visitAdd", performCategoryCommand);
 	}
 
 }

@@ -49,7 +49,7 @@
 									<td class="userPhone">${userInfo.cellphone}</td>
 									<td class="userEmail">${userInfo.email}</td>
 									<td class="userVisit">${visitCount}</td>
-									<th class="VisitAdd"><button type="button"
+									<th class="VisitAdd"><button type="button" OnClick="window.location='visitAddForm.do?id=${id}'"
 											class="btn btn-primary">추가</button></th>
 								</tr>
 							</c:forEach>
