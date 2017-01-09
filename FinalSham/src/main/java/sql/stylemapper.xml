@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mepper.dtd">
+<mapper namespace="style">
+	
+	<insert id="insertStyle" parameterType="finalWeb.command.StyleCommand">
+		insert into style values(#{designer}, #{stylePhoto}, #{price}, #{styleName}, #{styleGender}, #{styleType}, 1, sysdate, styleseq.NEXTVAL, #{fileCount}, #{styleVideo}, #{videoCount})
+	</insert>
+	
+	<update id="updateViewCount" parameterType="finalWeb.command.StyleCommand">
+		update style set viewCount = #{viewCount}+1 where styleNum = #{styleNum}
+	</update>
+	
+	<update id="updateStyle" parameterType="finalWeb.command.StyleCommand">
+		update style set designer = #{designer}, price = #{price}, styleName = #{styleName}, stylePhoto = #{stylePhoto}, styleGender = #{styleGender}, styleType = #{styleType}, fileCount = #{fileCount}, styleVideo = #{styleVideo}, videoCount = #{videoCount} where styleNum = #{styleNum}
+	</update>
+	
+	<delete id="deleteStyle" parameterType="String">
+		delete from style where styleNum=#{styleNum}
+	</delete>
+	
+	<select id="selectAll" resultType="finalWeb.command.StyleCommand">
+		select * from style
+	</select>
+	
+	<select id="selectStyle" resultType="finalWeb.command.StyleCommand" parameterType="String">
+		select * from style where styleNum=#{styleNum}
+	</select>
+	
+	<select id="selectDesigner" resultType="String">
+		select designer from designer
+	</select>
+	
+	
+</mapper>

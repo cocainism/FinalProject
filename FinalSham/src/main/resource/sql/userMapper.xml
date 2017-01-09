@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="myUser">
+	<!-- 회원가입 -->
+	<insert id="insertInfo" parameterType="finalWeb.command.UserCommand">
+		insert into shamuser values(#{id}, #{password}, #{name}, #{birth},#{cellphone},#{email})
+	</insert>
+	
+	<!-- 비밀번호 수정-->
+	<update id="updateInfo" parameterType="finalWeb.command.UserCommand">
+		update shamuser set password = #{password},name =#{name}, email=#{email}, cellphone=#{cellphone} where id = #{id} 
+	</update>
+	
+	<!-- 비밀번호 수정-->
+	<update id="updatePwd" parameterType="finalWeb.command.UserCommand">
+		update shamuser set password = #{password} where id = #{id} 
+	</update>
+	
+	<!-- 아이디 삭제 -->
+	<delete id="deleteInfo" parameterType="finalWeb.command.UserCommand">
+		delete from shamuser where id = #{id} and password = #{password}
+	</delete>
+	
+	<!-- 로그인을 위한 아이디확인  -->
+	<select id="isId" resultType="finalWeb.command.UserCommand"  parameterType="finalWeb.command.UserCommand">
+		select * from shamuser where id = #{id} and password = #{password}
+	</select>
+	
+	<select id="boardId" resultType="finalWeb.command.UserCommand"  parameterType="finalWeb.command.UserCommand">
+		select * from shamuser where id = #{id}
+	</select>
+	<!-- 이메일확인 -->
+	<select id="isEmail" resultType="finalWeb.command.UserCommand"  parameterType="finalWeb.command.UserCommand">
+		select * from shamuser where id = #{id}
+	</select>
+	
+	<!-- 정보확인 -->
+	<select id="info" resultType="finalWeb.command.UserCommand"  parameterType="finalWeb.command.UserCommand">
+		select * from shamuser where name = #{name}
+	</select>
+	
+</mapper>
+

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userManage">
+
+	<select id="selectUserList" resultType="finalWeb.command.UserCommand">
+		select
+		id,name,birth,cellphone,email
+		from shamUser
+		ORDER BY name
+	</select>
+
+	<select id="userAll" resultType="finalWeb.command.UserCommand"
+		parameterType="Map">
+		select id,name,birth,cellphone,email, r
+		from (select id ,
+		name , birth, cellphone, email, rownum r
+		from (select * from shamUser
+		order by name)) where r &gt;= #{startRow} and
+		r &lt;=#{endRow}
+	</select>
+
+	<select id="userCount" resultType="int">
+		select count(*)-1 from
+		shamUser
+	</select>
+
+	<select id="searchUser" resultType="finalWeb.command.UserCommand"
+		parameterType="Map">
+		select id,name,birth,cellphone,email, r
+		from (select id , name , birth,	cellphone, email, rownum r
+		from (select * from shamUser order by name)
+		<where>
+			<if test="searchN == 0">
+				id
+			</if>
+			<if test="searchN == 1">
+				name
+			</if>
+			<if test="searchN == 2">
+				birth
+			</if>
+			<if test="searchN == 3">
+				cellphone
+			</if>
+			<if test="searchN == 4">
+				email
+			</if>
+		</where>
+		like '%' || #{searchKeyword} || '%' order by name ) where r &gt;=#{startRow} and r &lt;= #{endRow}
+
+	</select> 
+
+	<select id="searchUserCount" resultType="int" parameterType="map">
+		select count(*) from shamUser
+		<where>
+			<if test="searchN == 0">
+				id
+			</if>
+			<if test="searchN == 1">
+				name
+			</if>
+			<if test="searchN == 2">
+				birth
+			</if>
+			<if test="searchN == 3">
+				cellphone
+			</if>
+			<if test="searchN == 4">
+				email
+			</if>
+		</where>
+			
+			like '%' || #{searchKeyword} || '%'
+		
+	</select>
+</mapper>

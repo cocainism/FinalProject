@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myMem">
+	
+	<select id="getArticleCount" resultType="int">
+	 select count(*) from board
+	</select>
+	 
+	<select id="getArticles" resultType="finalWeb.command.ProcedureQACommand" parameterType="Map" >	
+            select qnANo,writer,qnATitle,passwd,qnADate,ref,re_step,re_level,QnAContent,QnAHits,r   
+            from (select qnANo,writer,qnATitle,passwd,qnADate,ref,re_step,re_level,QnAContent qnAContent,QnAHits qnAHits,rownum r  
+            from (select * from board order by ref desc, re_step asc) order by ref desc, re_step asc ) where r &gt;= #{startRow} and r &lt;= #{endRow}
+	</select>
+	
+	<select id="searchgetArticleCount" resultType="int" parameterType="String">
+	 select count(*) from board <where>
+	 <if test="searchN == 0">
+		writer 
+	 </if>	
+	  <if test="searchN == 1">
+		qnATitle 
+	 </if>
+	  <if test="searchN == 2">
+		QnAContent 
+	 </if> 
+		 like '%' || #{searchKeyword} || '%'
+	 </where>
+	 	
+	</select>
+	
+	<select id="searchgetArticles" resultType="finalWeb.command.ProcedureQACommand" parameterType="Map" >
+
+	select
+	qnANo,writer,qnATitle,passwd,qnADate,ref,re_step,re_level,QnAContent qnAContent,QnAHits qnAHits,r
+	from (select
+	qnANo,writer,qnATitle,passwd,qnADate,ref,re_step,re_level,QnAContent qnAContent,QnAHits qnAHits,rownum r
+	from (select * from board order by ref desc, re_step asc) 
+	<where> <if test="searchN == 0">
+		writer 
+	 </if>	
+	  <if test="searchN == 1">
+		qnATitle 
+	 </if>
+	  <if test="searchN == 2">
+		qnAContent 
+	 </if> 
+	</where>
+	like '%' || #{searchKeyword} || '%'
+	order by ref desc, re_step asc ) where r &gt;= #{startRow} and r &lt;= #{endRow}
+	
+	</select>
+	
+	
+	<select id="getArticle" resultType="finalWeb.command.ProcedureQACommand" parameterType="int" >
+	select * from board where qnANo = #{qnANo}
+	</select>
+	
+	
+	<insert id="insert" parameterType="finalWeb.command.ProcedureQACommand">
+		insert into board(qnANo,writer,qnATitle,passwd,qnADate,ref,re_step,re_level,QnAContent)
+		values(qnANoseq.NEXTVAL,#{writer},#{qnATitle},#{passwd},sysdate,#{ref},#{re_step},#{re_level},#{qnAContent})
+	</insert>
+	
+	<select id="deletepw" resultType="String" parameterType="finalWeb.command.ProcedureQACommand">
+	 select passwd from board where qnANo = #{qnANo}
+	</select>
+	
+	<delete id="delete" parameterType="finalWeb.command.ProcedureQACommand">
+	delete from board where qnANo=#{qnANo} 
+	</delete>
+	
+	
+	<update id="update" parameterType="finalWeb.command.ProcedureQACommand">
+	update board set writer = #{writer},qnATitle = #{qnATitle} , passwd = #{passwd} , QnAContent = #{qnAContent}, qnADate = sysdate where qnANo = #{qnANo}
+	</update>
+	
+	
+	<select id="getMax" resultType="String"  parameterType="finalWeb.command.ProcedureQACommand">
+	select max(qnANo) from board
+	</select>
+	
+		<select id="getMax1" resultType="int"  parameterType="finalWeb.command.ProcedureQACommand">
+	select max(qnANo) from board
+	</select>
+	
+	<update id="updateRef" parameterType="finalWeb.command.ProcedureQACommand">
+	update board set re_step=re_step+1 where ref=#{ref} and re_step&gt;#{re_step}
+	</update>
+	
+	<update id="QnAHits" parameterType="finalWeb.command.ProcedureQACommand">
+	update board set QnAHits=QnAHits+1 where qnANo = #{qnANo}
+	</update>
+</mapper>
