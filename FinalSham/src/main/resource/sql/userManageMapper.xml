@@ -75,4 +75,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			like '%' || #{searchKeyword} || '%'
 		
 	</select>
+	
+	<select id="userInfo" resultType="finalWeb.command.UserCommand" parameterType="String">
+		select * from shamUser where id=#{id}
+	
+	</select>
+	
+	<select id="visitCount" resultType="int" parameterType="String">
+		 select COUNT(*) from shamUser,performcategory where shamUser.ID=performcategory.ID and performcategory.ID=#{id}
+	
+	</select>
 </mapper>

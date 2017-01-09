@@ -54,10 +54,25 @@ public class UserManageController {
 		model.addAttribute("number", new Integer(number));
 		model.addAttribute("user", userList);
 		model.addAttribute("search", search);
-		model.addAttribute("searchn", searchn); 
-		
-		
+		model.addAttribute("searchn", searchn);
+
 		return "content/userManage";
+	}
+
+	@RequestMapping(value = "/userInfoView.do")
+	public String userInfoView(String id, ModelMap model) throws Exception {
+
+		model.addAttribute("id", id);
+		
+		List<UserCommand> userInfo = service.userInfo(id);
+		int visitCount = service.visitCount(id);
+		
+		System.out.println("Con-visitCount"+visitCount);
+
+		model.addAttribute("userInfo", userInfo);
+		model.addAttribute("visitCount", visitCount);
+
+		return "content/userInfoView";
 	}
 
 }
