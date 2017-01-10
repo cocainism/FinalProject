@@ -49,7 +49,8 @@
 									<td class="userPhone">${userInfo.cellphone}</td>
 									<td class="userEmail">${userInfo.email}</td>
 									<td class="userVisit">${visitCount}</td>
-									<th class="VisitAdd"><button type="button" OnClick="window.location='visitAddForm.do?id=${id}'"
+									<th class="VisitAdd"><button type="button"
+											OnClick="window.location='visitAddForm.do?id=${id}'"
 											class="btn btn-primary">추가</button></th>
 								</tr>
 							</c:forEach>
@@ -63,3 +64,65 @@
 	</div>
 	<!-- /.container -->
 </section>
+
+<div class="container">
+	<div class="col-sm-12">
+		<div class="box table-responsive">
+			<h3 class="title">${id}님시술내역</h3>
+			<table class="table cart-table order-details-table">
+				<thead>
+					<tr>
+						<th class="performStyle" style="width: 25%">스타일</th>
+						<th class="performPrice" style="width: 25%">가격</th>
+						<th class="performDate" style="width: 25%">시술날짜</th>
+						<th class="performDesigner" style="width: 25%">디자이너</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${PerformList}" var="PerformList"
+						varStatus="status">
+						<tr>
+							<td class="performStyle">${PerformList.style}</td>
+							<td class="performPrice">${PerformList.price}원</td>
+							<td class="performDate">${PerformList.performDate}</td>
+							<td class="performDesigner">${PerformList.designer}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.container -->
+</div>
+
+<div class="container">
+	<div class="col-sm-12">
+		<div class="box table-responsive">
+			<h3 class="title">${id}님구매내역</h3>
+			<table class="table cart-table order-details-table">
+				<thead>
+					<tr>
+						<th class="buyItemName" style="width: 25%">제품이름</th>
+						<th class="buyItemTitle" style="width: 25%">제품제목</th>
+						<th class="buyItemPrice" style="width: 25%">제품가격</th>
+						<th class="buyItemDate" style="width: 25%">구매일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${buyItemList}" var="buyItemList"
+						varStatus="status">
+						<tr>
+							<td class="performStyle">${buyItemList.itemName}</td>
+							<td class="performPrice">${buyItemList.itemTitle}</td>
+							<td class="performDate">${buyItemList.itemPrice}원</td>
+							<td class="performDesigner">${buyItemList.itemDate}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.container -->
+</div>

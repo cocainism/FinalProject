@@ -12,6 +12,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select itemdate,itemname,itemtitle,itemprice,itemcount from buyItemCategory where id = #{id} 
 	</select>
 	
+	<select id="buyItemLists" resultType="finalWeb.command.BuyItemCommand" parameterType="String">
+		select to_char(itemDate, 'YYYY-MM-DD')itemDate,itemname,itemtitle,itemprice,itemcount,id from buyItemCategory where id = #{id} order by itemdate desc
+	</select>
+	
 	<select id="buyItemCount" resultType="Integer">
 		select count(*) from buyItemCategory
 	</select>

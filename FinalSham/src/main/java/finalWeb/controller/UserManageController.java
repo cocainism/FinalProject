@@ -4,26 +4,34 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import finalWeb.command.BuyItemCommand;
 import finalWeb.command.DesignerCommand;
 import finalWeb.command.PerformCategoryCommand;
 import finalWeb.command.UserCommand;
-import finalWeb.service.ProcedureQAService;
+import finalWeb.dao.BuyItemDao;
+import finalWeb.dao.PerformCategoryDao;
 import finalWeb.service.UserManageService;
 
 @Controller
 public class UserManageController {
 
 	@Autowired
-	private UserManageService service;
+	private UserManageService userManageService;
 
 	public void setService(UserManageService service) {
-		this.service = service;
+		this.userManageService = service;
 	}
+	@Autowired
+	private PerformCategoryDao performCategoryDao;
+	
+	@Autowired
+	private BuyItemDao buyItemDao;
+	
+	
 
 	@RequestMapping(value = "/userManage.do")
 	public String userView(ModelMap model, String pageNum, String search, @RequestParam(defaultValue = "0") int searchn)
@@ -40,10 +48,10 @@ public class UserManageController {
 		int number = 0;
 
 		List<UserCommand> userList = null;
-		count = service.getUserCount(search, searchn);
+		count = userManageService.getUserCount(search, searchn);
 
 		if (count > 0) {
-			userList = service.getUser(startRow, endRow, search, searchn);
+			userList = userManageService.getUser(startRow, endRow, search, searchn);
 		}
 
 		number = count - (currentPage - 1) * pageSize;
@@ -62,14 +70,19 @@ public class UserManageController {
 	}
 
 	@RequestMapping(value = "/userInfoView.do")
-	public String userInfoView(String id, ModelMap model) throws Exception {
+	public String userInfoView(String id, ModelMap model, PerformCategoryCommand performCategoryCommand, BuyItemCommand buyItemCommand) throws Exception {
 
+		List<UserCommand> userInfo = userManageService.userInfo(id);
+		int visitCount = userManageService.visitCount(id);
+		
+		List<PerformCategoryCommand> PerformList= performCategoryDao.selectPerformList(id);
+		
+		List<BuyItemCommand> buyItemList = buyItemDao.buyItemList(id);
+		
 		model.addAttribute("id", id);
-		
-		List<UserCommand> userInfo = service.userInfo(id);
-		int visitCount = service.visitCount(id);
-		
 		model.addAttribute("userInfo", userInfo);
+		model.addAttribute("PerformList", PerformList);
+		model.addAttribute("buyItemList", buyItemList);
 		model.addAttribute("visitCount", visitCount);
 
 		return "content/userInfoView";
@@ -78,7 +91,7 @@ public class UserManageController {
 	@RequestMapping(value = "/visitAddForm.do")
 	public String visitAddForm(String id, ModelMap model, DesignerCommand designerCommand) throws Exception {
 		
-		List<DesignerCommand> designerList = service.getDesigner();
+		List<DesignerCommand> designerList = userManageService.getDesigner();
 		model.addAttribute("id", id);
 		
 		for (int i = 0; i < designerList.size(); i++) {
@@ -93,16 +106,11 @@ public class UserManageController {
 	
 	@RequestMapping(value = "/visitAdd.do")
 	public String visitAdd(String id, PerformCategoryCommand performCategoryCommand) throws Exception {
-		System.out.println("performCategoryCommand id추가전"+performCategoryCommand.getId());
-		System.out.println("performCategoryCommand deeee:"+performCategoryCommand.getDesigner());
-		System.out.println("performCategoryCommand sttttt:"+performCategoryCommand.getStyle());
 		performCategoryCommand.setId(id);
 		
-		System.out.println("performCategoryCommand id추가후"+performCategoryCommand.getId());
-		int i = service.visitAdd(performCategoryCommand);
+		int i = userManageService.visitAdd(performCategoryCommand);
 		
-		System.out.println(i);
-		return "content/visitAdd";
+		return "redirect:/userInfoView.do?id="+id;
 	}
 
 	

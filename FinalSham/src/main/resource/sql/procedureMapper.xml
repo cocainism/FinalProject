@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="myProcedure">
+	<select id="getProcedure" resultType="finalWeb.command.PerformCategoryCommand" parameterType="String">
+		select * from performCategory where id=#{id}
+	</select>
+	
+	<select id="selectPerformList" resultType="finalWeb.command.PerformCategoryCommand" parameterType="String">
+		select designer,performno,to_char(performdate, 'YYYY-MM-DD') performdate, style,price,id from performCategory where id=#{id} ORDER BY performdate desc
+	</select>
+</mapper>

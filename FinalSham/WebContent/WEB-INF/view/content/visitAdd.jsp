@@ -14,7 +14,7 @@
 				<ol class="breadcrumb">
 					<li><a href="main.do">Home</a></li>
 					<li><a href="userManage.do">회원관리</a></li>
-					<li><a href="userInfoView.do">회원상세정보</a></li>
+					<li><a href="userInfoView.do?id=${id}">회원상세정보</a></li>
 					<li class="active">방문추가</li>
 				</ol>
 			</div>
