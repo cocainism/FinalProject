@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="myItem">
+	<!-- 회원가입 -->
+	<insert id="itemAdd" parameterType="finalWeb.command.ItemCommand">
+		insert into item values(#{itemName},#{itemPhoto}, #{itemTitle}, #{itemPrice}, #{itemContent},#{itemCount},#{itemType}) 
+	</insert>
+	
+	<insert id="itemListAdd" parameterType="finalWeb.command.ItemListCommand">
+		insert into itemList values(#{itemType})
+	</insert>
+	
+	<update id ="itemUpdates" parameterType="finalWeb.command.ItemCommand">
+		update item set itemPhoto = #{itemPhoto}, itemTitle = #{itemTitle}, itemPrice = #{itemPrice}, itemContent= #{itemContent}, itemCount = #{itemCount}, itemType = #{itemType} where itemName= #{itemName}
+	</update>
+	
+	<update id ="itemUpdateCount" parameterType="finalWeb.command.ItemCommand">
+		update item set itemCount = #{itemCount} where itemName = #{itemName}
+	</update>
+
+	<delete id="itemDelete" parameterType="finalWeb.command.ItemCommand">
+		delete from item where itemName = #{itemName}
+	</delete>
+	
+	<delete id="itemListDelete" parameterType="finalWeb.command.ItemListCommand">
+		delete from itemList where itemType = #{itemType}
+	</delete>
+	
+	<select id="itemInfo" resultType="finalWeb.command.ItemCommand" parameterType="finalWeb.command.ItemCommand">
+		select * from item where itemName = #{itemName}
+	</select>
+	
+	<select id="itemList" resultType="finalWeb.command.ItemCommand">
+		select * from item
+	</select>
+	
+	<select id="itemListInfo" resultType="finalWeb.command.ItemListCommand">
+		select * from itemList
+	</select>
+	
+</mapper>

@@ -15,7 +15,8 @@ public interface UserManageService {
 	public List<UserCommand> userInfo(String id);
 	public int visitCount(String id);
 	public List<DesignerCommand> getDesigner();
-	public int visitAdd(PerformCategoryCommand performCategoryCommand);	
+	public int visitAdd(PerformCategoryCommand performCategoryCommand);
+	public int deleteUser(PerformCategoryCommand performCategoryCommand);	
 	
 	
 }

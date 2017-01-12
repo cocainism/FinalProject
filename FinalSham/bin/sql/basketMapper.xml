@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="myBasket">
+	
+	<insert id="basketAdd" parameterType="finalWeb.command.BasketCommand">
+		insert into basket values(#{id},#{itemName}, #{itemTitle}, #{itemPrice}, #{itemCount})
+	</insert>
+	
+	<delete id="basketDelete" parameterType="finalWeb.command.BasketCommand">
+		delete from basket where itemName = #{itemName}
+	</delete>
+		
+	<select id="showBasket" resultType="finalWeb.command.ItemCommand" parameterType="finalWeb.command.BasketCommand">
+		select i.itemphoto,b.itemname,b.itemtitle,b.itemprice, b.itemcount from basket b left outer join item i on b.itemname = i.itemname where b.id = #{id}
+	</select>
+	
+	<select id="basketCount" resultType="Integer" parameterType="String">
+		select count(*) from basket where id = #{id}
+	</select>
+	
+	<select id="check" resultType="finalWeb.command.BasketCommand">
+		select * from basket where itemName = #{itemName} and id = #{id}
+	</select>
+</mapper>

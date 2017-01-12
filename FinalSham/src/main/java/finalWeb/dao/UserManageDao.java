@@ -85,8 +85,11 @@ public class UserManageDao {
 	}
 
 	public int visitAdd(PerformCategoryCommand performCategoryCommand) {
-		System.out.println("performCategoryCommand sttttt:" + performCategoryCommand.getStyle());
 		return session.insert("userManage.visitAdd", performCategoryCommand);
+	}
+
+	public int deleteUser(PerformCategoryCommand performCategoryCommand) {
+		return session.delete("userManage.deleteUser", performCategoryCommand);
 	}
 
 }

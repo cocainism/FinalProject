@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="myBuyItem">
+	<insert id="buyItemAdd" parameterType="finalWeb.command.BuyItemCommand">
+		insert into buyItemCategory values(#{itemName}, #{itemTitle},#{itemPrice},#{itemCount},TO_DATE(SYSDATE, 'YYYY-MM-DD'),#{id}) 
+	</insert>	
+	
+	<select id="buyItemList" resultType="finalWeb.command.BuyItemCommand" parameterType="finalWeb.command.BuyItemCommand">
+		select itemdate,itemname,itemtitle,itemprice,itemcount from buyItemCategory where id = #{id} 
+	</select>
+	
+	<select id="buyItemLists" resultType="finalWeb.command.BuyItemCommand" parameterType="String">
+		select to_char(itemDate, 'YYYY-MM-DD')itemDate,itemname,itemtitle,itemprice,itemcount,id from buyItemCategory where id = #{id} order by itemdate desc
+	</select>
+	
+	<select id="buyItemCount" resultType="Integer">
+		select count(*) from buyItemCategory
+	</select>
+</mapper>

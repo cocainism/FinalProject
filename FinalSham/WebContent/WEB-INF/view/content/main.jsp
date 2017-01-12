@@ -39,19 +39,19 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4 collection">
-				<a href="#!"> <img src="build/img/collections/notice.jpg"
-					class="img-responsive" alt="">
+				<a href="#!"> <img src="build/img/collections/notice.png"
+					class="img-responsive" style="width: 360px; height: 114px" alt="">
 			</div>
 			<!-- /.collection -->
-			<div class="col-sm-4 collection">
-				<a href="#!"> <img src="build/img/collections/reservation.png"
-					class="img-responsive" alt="">
+			<div class="col-sm-4 collection"> 
+				<a href="#!"> <img src="build/img/collections/Reserve.png"
+					class="img-responsive" style="width: 360px; height: 114px" alt="">
 				</a>
 			</div>
 			<!-- /.collection -->
-			<div class="col-sm-4 collection">
-				<a href="#!"> <img src="build/img/collections/04.jpg"
-					class="img-responsive" alt="">
+			<div class="col-sm-4 collection"> 
+				<a href="#!"> <img src="build/img/collections/location.jpg"
+					class="img-responsive" style="width: 360px; height: 114px" alt="">
 				</a>
 			</div>
 			<!-- /.collection -->

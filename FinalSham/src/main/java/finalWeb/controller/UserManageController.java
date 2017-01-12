@@ -108,11 +108,60 @@ public class UserManageController {
 	public String visitAdd(String id, PerformCategoryCommand performCategoryCommand) throws Exception {
 		performCategoryCommand.setId(id);
 		
-		int i = userManageService.visitAdd(performCategoryCommand);
+		userManageService.visitAdd(performCategoryCommand);
 		
 		return "redirect:/userInfoView.do?id="+id;
 	}
-
+	@RequestMapping(value = "/deleteUser.do")
+	public String deleteUser(String id, PerformCategoryCommand performCategoryCommand) throws Exception {
+		performCategoryCommand.setId(id);
+		
+		userManageService.deleteUser(performCategoryCommand);
+		
+		return "redirect:/userInfoView.do";
+	}
 	
+/*	@RequestMapping(value = "/deleteUser.do")
+	public void deleteUser(HttpServletResponse resp,String id, String pageNum,PerformCategoryCommand performCategoryCommand, HttpSession session) throws Exception {
+		JSONObject jso = new JSONObject();
+		
+		performCategoryCommand.setId(id);
+		
+		userManageService.deleteUser(performCategoryCommand);
+		///////////////////////////
+		
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int pageSize = 10;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = (currentPage - 1) * pageSize + 1;
+		int endRow = currentPage * pageSize;
+		int count = 0;
+		int number = 0;
+
+		List<UserCommand> userList = null;
+		count = userManageService.getUserCount(search, searchn);
+
+		if (count > 0) {
+			userList = userManageService.getUser(startRow, endRow, search, searchn);
+		}
+
+		number = count - (currentPage - 1) * pageSize;
+
+		jso.put("currentPage", new Integer(currentPage));
+		model.addAttribute("startRow", new Integer(startRow));
+		model.addAttribute("endRow", new Integer(endRow));
+		model.addAttribute("count", new Integer(count));
+		model.addAttribute("pageSize", new Integer(pageSize));
+		model.addAttribute("number", new Integer(number));
+		model.addAttribute("user", userList);
+		///////////////////////////
+		jso.put("", );
+		resp.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = resp.getWriter(); // 
+		out.println(jso.toString());
+				
+	}*/
 	
 }

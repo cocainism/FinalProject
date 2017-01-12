@@ -70,9 +70,14 @@ public class UserManageServiceImpl implements UserManageService {
 	}
 	
 	public int visitAdd(PerformCategoryCommand performCategoryCommand){
-		System.out.println("performCategoryCommand Impl"+performCategoryCommand.getId());
 		int i = dao.visitAdd(performCategoryCommand);
 		return i;
 	}	
+	
+	public int deleteUser(PerformCategoryCommand performCategoryCommand){
+		int i = dao.deleteUser(performCategoryCommand);
+		return i;
+		
+	}
 
 }

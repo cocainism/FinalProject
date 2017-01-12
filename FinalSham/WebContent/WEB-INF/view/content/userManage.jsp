@@ -12,7 +12,6 @@
 
 		$("#th1 input").click(function() {
 			var clickUserId = $(this).parent().parent().attr("id");
-			alert(clickUserId);
 			var trname = "div#" + num;
 			$(trname).remove();
 			return false;
@@ -57,7 +56,7 @@
 						<tbody> 
 							<c:forEach items="${user}" var="userList" varStatus="status">
 								<form name="addForm" id="addForm" method="post"
-									action="deleteUser.do" onsubmit="return check()">
+									action="deleteUser.do?id=${userList.id}" onsubmit="return check()">
 									<tr id="${userList.id}">
 										<c:if test="${userList.name ne 'admin'}">
 											<td class="userId" id="userId"><a
